@@ -17,6 +17,7 @@ init() {
 start_graphapi() {
 	cd /usr/graphapi
 	mkdir -p /data/graphapi/
+	echo 'HOST = "0.0.0.0"' >> config.cfg
 	flask run --host=0.0.0.0 --port 5000
 	fail "graphapi"
 }
@@ -42,10 +43,15 @@ fail() {
 
 # graphapi
 export GRAPH_SAVE_PATH=/data/graphapi/current_graph.graph
+export biggraph_incoming_path=/services/biggraph/
+export biggraph_outgoing_url="http://localhost:5000"
 # twowaykv
 export GRAPH_DOCS_DIR=/usr/twowaykv/docs/*
 export GRAPH_DB_STORE_DIR=/data/twowaykv
-
+export twowaykv_incoming_path="/services/twowaykv/"
+export twowaykv_outgoing_url="http://localhost:5001"
+# reverse proxy
+export services="twowaykv,biggraph"
 
 # start jobs
 init
