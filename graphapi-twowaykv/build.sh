@@ -2,10 +2,7 @@
 
 set -euf -o pipefail
 
-
 # build image
 
 docker build . \
- -t dgoldstein1/links-heroku-graphapi-twowaykv:latest
-
- 
+	-t dgoldstein1/links-heroku-graphapi-twowaykv:latest

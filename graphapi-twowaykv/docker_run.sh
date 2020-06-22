@@ -7,7 +7,6 @@ set -e
 # - https://github.com/dgoldstein1/graphapi on 5000
 # - https://github.com/dgoldstein1/reverse-proxy on $PORT
 
-
 # init app configs
 init() {
 	touch logs.txt
@@ -32,12 +31,28 @@ start_reverseproxy() {
 	fail "reverseproxy"
 }
 
+sync_s3() {
+	aws s3 sync /data $AWS_SYNC_DIRECTORY
+}
+
+sync_s3_loop() {
+	# read in before there is any
+	ENDPOINT="$biggraph_outgoing_url/save"
+	while true; do
+		sleep $GRAPH_SAVE_INTERVAL
+		curl -s $ENDPOINT | wc -c
+		echo "syncing with s3"
+		sync_s3
+	done
+
+}
+
 # service has failed
 # $1 = service name
 fail() {
-	echo "-------------------------------" >> logs.txt
-	echo "------------ $1 failure -------" >> logs.txt
-	echo "-------------------------------" >> logs.txt
+	echo "-------------------------------" >>logs.txt
+	echo "------------ $1 failure -------" >>logs.txt
+	echo "-------------------------------" >>logs.txt
 }
 
 # graphapi
@@ -52,13 +67,25 @@ export twowaykv_incoming_path="/services/twowaykv/"
 export twowaykv_outgoing_url="http://localhost:5001"
 # reverse proxy
 export services="twowaykv,biggraph"
+# sync s3
+export GRAPH_SAVE_INTERVAL=10
+export READ_S3=false
+export WRITE_S3=false
+export AWS_ACCESS_KEY_ID=
+export AWS_SECRET_ACCESS_KEY=
+export AWS_SYNC_DIRECTORY=
 
 # start jobs
 init
-start_graphapi > logs.txt &
-start_twowaykv > logs.txt &
-start_reverseproxy > logs.txt &
+if [ $READ_S3 = "true" ]; then
+	aws s3 sync /data $AWS_SYNC_DIRECTORY
+fi
+if [ $WRITE_S3 = "true" ]; then
+	sync_s3_loop >logs.txt &
+fi
+start_graphapi >logs.txt &
+start_twowaykv >logs.txt &
+start_reverseproxy >logs.txt &
 
 printenv
 tail -f logs.txt
-
