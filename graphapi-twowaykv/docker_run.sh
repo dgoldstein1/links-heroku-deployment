@@ -22,6 +22,7 @@ start_graphapi() {
 
 start_twowaykv() {
 	mkdir -p /data/twowaykv/
+	unset PORT
 	/usr/twowaykv/twowaykv serve
 	fail "twowaykv"
 }
