@@ -32,6 +32,7 @@ start_reverseproxy() {
 }
 
 sync_s3() {
+	echo "syncing with s3"
 	aws s3 sync /data $AWS_SYNC_DIRECTORY
 }
 
@@ -41,7 +42,6 @@ sync_s3_loop() {
 	while true; do
 		sleep $GRAPH_SAVE_INTERVAL
 		curl -s $ENDPOINT | wc -c
-		echo "syncing with s3"
 		sync_s3
 	done
 
@@ -69,23 +69,23 @@ export twowaykv_outgoing_url="http://localhost:5001"
 export services="twowaykv,biggraph"
 # sync s3
 export GRAPH_SAVE_INTERVAL=10
-export READ_S3=false
-export WRITE_S3=false
-export AWS_ACCESS_KEY_ID=
-export AWS_SECRET_ACCESS_KEY=
-export AWS_SYNC_DIRECTORY=
+# export READ_S3=false
+# export WRITE_S3=false
+# export AWS_ACCESS_KEY_ID=
+# export AWS_SECRET_ACCESS_KEY=
+# export AWS_SYNC_DIRECTORY=
 
 # start jobs
 init
 if [ $READ_S3 = "true" ]; then
-	aws s3 sync /data $AWS_SYNC_DIRECTORY
+	sync_s3 
 fi
 if [ $WRITE_S3 = "true" ]; then
 	sync_s3_loop >logs.txt &
 fi
-start_graphapi >logs.txt &
-start_twowaykv >logs.txt &
-start_reverseproxy >logs.txt &
+start_graphapi &
+start_twowaykv &
+start_reverseproxy &
 
 printenv
 tail -f logs.txt
