@@ -76,16 +76,16 @@ export GRAPH_SAVE_INTERVAL=10
 # export AWS_SYNC_DIRECTORY=
 
 # start jobs
-init
-if [ $READ_S3 = "true" ]; then
+# init
+if [ "$READ_S3" = "true" ]; then
 	sync_s3 
 fi
-if [ $WRITE_S3 = "true" ]; then
+if [ "$WRITE_S3" = "true" ]; then
 	sync_s3_loop >logs.txt &
 fi
-start_graphapi &
-start_twowaykv &
-start_reverseproxy &
+# start_graphapi &
+# start_twowaykv &
+# start_reverseproxy &
 
-printenv
-tail -f logs.txt
+# printenv
+# tail -f logs.txt
