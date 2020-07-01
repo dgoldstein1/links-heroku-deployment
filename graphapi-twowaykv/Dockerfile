@@ -22,5 +22,6 @@ COPY --from=reverseproxy /go/src/dgoldstein1/reverseProxy/reverseProxy /usr/reve
 
 # execution
 ADD VERSION /usr/VERSION
+ENV GRAPH_SAVE_INTERVAL 120
 ADD docker_run.sh /usr/docker_run.sh
 CMD /usr/docker_run.sh

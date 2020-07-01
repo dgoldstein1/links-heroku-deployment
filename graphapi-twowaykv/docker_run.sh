@@ -14,6 +14,8 @@ init() {
 
 # runs graphapi
 start_graphapi() {
+	mkdir -p $(dirname $GRAPH_SAVE_PATH)
+	touch $GRAPH_SAVE_PATH
 	cd /usr/graphApi
 	flask run --host=0.0.0.0 --port 5002
 	fail "graphapi"
@@ -68,7 +70,7 @@ export twowaykv_outgoing_url="http://localhost:5001"
 # reverse proxy
 export services="twowaykv,biggraph"
 # sync s3
-export GRAPH_SAVE_INTERVAL=10
+# export GRAPH_SAVE_INTERVAL=10
 # export READ_S3=false
 # export WRITE_S3=false
 # export AWS_ACCESS_KEY_ID=
