@@ -4,9 +4,9 @@
 # - https://github.com/dgoldstein1/reverse-proxy
 
 # Copy everything into a commonn container
-FROM dgoldstein1/reverse-proxy:latest AS reverseproxy
-FROM dgoldstein1/twowaykv:latest AS twowaykv
-FROM dgoldstein1/biggraph:latest AS biggraph
+FROM dgoldstein1/reverse-proxy:0.1.5 AS reverseproxy
+FROM dgoldstein1/twowaykv:1.0.1 AS twowaykv
+FROM dgoldstein1/biggraph:2.0.2 AS biggraph
 
 # configure graphapi
 RUN mkdir -p /usr/graphapi
