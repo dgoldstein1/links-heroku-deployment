@@ -1,0 +1,65 @@
+
+defaults: &defaults
+  environment:
+    HEROKU_APP_NAMES: "graphapi-twowaykv-dev"
+
+version: 2
+jobs:
+  build:
+    <<: *defaults
+    machine : true
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name : "build and push docker images"
+          command : |
+              export $(cat VERSION | xargs)
+              docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
+              ./build.sh    
+              docker tag  dgoldstein1/links-heroku-graphapi-twowaykv:latest dgoldstein1/links-heroku-graphapi-twowaykv:$VERSION
+              docker push dgoldstein1/links-heroku-graphapi-twowaykv:$VERSION
+              docker push dgoldstein1/links-heroku-graphapi-twowaykv:latest
+
+              docker login --username=$EMAIL --password=$HEROKU_API_KEY registry.heroku.com
+              for appName in ${HEROKU_APP_NAMES//,/ }
+              do
+                  echo "pushing docker image to $appName"
+                  docker tag dgoldstein1/links-heroku-graphapi-twowaykv:$VERSION registry.heroku.com/$appName/web
+                  docker push registry.heroku.com/$appName/web
+              done
+
+
+  deploy:
+    <<: *defaults
+    docker:
+      - image: buildpack-deps:trusty
+    steps:
+      - run:
+          name: "deploy"
+          command: |
+              wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
+              heroku version
+              for appName in ${HEROKU_APP_NAMES//,/ }
+              do
+                  echo "releasing $appName"
+                  heroku container:release web --app $appName
+              done
+
+
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only: master
+
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master

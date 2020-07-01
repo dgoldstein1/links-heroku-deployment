@@ -1,7 +1,5 @@
 #!/bin/sh
 
-set -euf -o pipefail
-
 # build image
 
 docker build . \
