@@ -4,6 +4,7 @@
 # - https://github.com/dgoldstein1/reverse-proxy
 
 # Copy everything into a commonn container
+FROM dgoldstein1/links:2.2.0 AS links
 FROM dgoldstein1/reverse-proxy:0.1.5 AS reverseproxy
 FROM dgoldstein1/twowaykv:1.0.1 AS twowaykv
 FROM dgoldstein1/biggraph:2.0.2 AS biggraph
@@ -19,6 +20,10 @@ COPY --from=twowaykv /docs/index.html /usr/twowaykv/docs/index.html
 # configure graphapi
 RUN mkdir -p /usr/reverseproxy/
 COPY --from=reverseproxy /go/src/dgoldstein1/reverseProxy/reverseProxy /usr/reverseproxy/reverseproxy
+
+# configure links-ui
+COPY --from=links /static-files/ /static-files/
+COPY links-config.json /static-files/config.json
 
 # execution
 ADD VERSION /usr/VERSION
