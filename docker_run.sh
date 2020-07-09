@@ -10,6 +10,7 @@ set -e
 # init app configs
 init() {
 	touch logs.txt
+	printenv
 }
 
 # runs graphapi
@@ -31,6 +32,12 @@ start_twowaykv() {
 start_reverseproxy() {
 	/usr/reverseproxy/reverseproxy
 	fail "reverseproxy"
+}
+
+read_s3() {
+	echo "reading from s3"
+	aws s3 ls $AWS_SYNC_DIRECTORY
+	aws s3 cp $AWS_SYNC_DIRECTORY /data --recursive
 }
 
 sync_s3() {
@@ -85,7 +92,7 @@ export services="twowaykv,biggraph,links,lookup"
 # start jobs
 init
 if [ "$READ_S3" = "true" ]; then
-	sync_s3 
+	read_s3 
 fi
 if [ "$WRITE_S3" = "true" ]; then
 	sync_s3_loop >logs.txt &
@@ -94,5 +101,4 @@ start_graphapi &
 start_twowaykv &
 start_reverseproxy &
 
-printenv
 tail -f logs.txt
