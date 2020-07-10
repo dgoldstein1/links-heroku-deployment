@@ -75,12 +75,21 @@ export GRAPH_DB_STORE_PORT=5001
 export twowaykv_incoming_path="/services/twowaykv/"
 export twowaykv_outgoing_url="http://localhost:5001"
 # links-ui
-export links_incoming_path=/
-export links_outgoing_url=file:///static-files
-export lookup_incoming_path=/services/dev/wiki/
-export lookup_outgoing_url=https://en.wikipedia.org
+export services="twowaykv,biggraph"
+if [ "$DEPLOY_UI" != "false" ]; then
+	export links_incoming_path=/
+	export links_outgoing_url=file:///static-files
+	export lookup_incoming_path=/wiki/
+	export lookup_outgoing_url=https://en.wikipedia.org
+	# analytics
+	export analytics_incoming_path=/analytics/server/
+	export analytics_outgoing_url=http://analytics-server:5000 #replace this in prod
+	export geoip_incoming_path=/analytics/api/geoIpServer/
+  	export geoip_outgoing_url=https://geo.ipify.org/api/
+  	# update services
+	export services="$services,links,lookup,geoip,analytics"
+fi
 # reverse proxy
-export services="twowaykv,biggraph,links,lookup"
 # sync s3
 # export GRAPH_SAVE_INTERVAL=10
 # export READ_S3=false

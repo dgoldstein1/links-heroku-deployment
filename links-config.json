@@ -1,9 +1,22 @@
 {
   "supportedGraphs": [
     {
-      "name": "moby dick",
+      "name": "Herman Melville's Moby Dick",
       "graphEndpoint": "/services/biggraph",
       "kvEndpoint": "/services/twowaykv",
+      "lookupEndpoint": "/wiki"
+    },
+    {
+      "name": "Louisa May Alcot's Little Women",
+      "graphEndpoint": "/services/little-women/biggraph",
+      "kvEndpoint": "/services/little-women/twowaykv",
+      "lookupEndpoint": "/wiki"
+    },
+    
+    {
+      "name": "James Joyce's Ulysees",
+      "graphEndpoint": "/services/ulysees/biggraph",
+      "kvEndpoint": "/services/ulysees/twowaykv",
       "lookupEndpoint": "/wiki"
     }
   ]
