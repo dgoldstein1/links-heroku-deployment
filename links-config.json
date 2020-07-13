@@ -8,15 +8,15 @@
     },
     {
       "name": "Louisa May Alcot's Little Women",
-      "graphEndpoint": "/services/little-women/biggraph",
-      "kvEndpoint": "/services/little-women/twowaykv",
+      "graphEndpoint": "/little-women/biggraph",
+      "kvEndpoint": "/little-women/twowaykv",
       "lookupEndpoint": "/wiki"
     },
     
     {
       "name": "James Joyce's Ulysees",
-      "graphEndpoint": "/services/ulysees/biggraph",
-      "kvEndpoint": "/services/ulysees/twowaykv",
+      "graphEndpoint": "/ulysees/biggraph",
+      "kvEndpoint": "/ulysees/twowaykv",
       "lookupEndpoint": "/wiki"
     }
   ]
