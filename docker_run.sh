@@ -75,7 +75,12 @@ export GRAPH_DB_STORE_PORT=5001
 export twowaykv_incoming_path="/services/twowaykv/"
 export twowaykv_outgoing_url="http://localhost:5001"
 # links-ui
-export services="$services,twowaykv,biggraph"
+if [ -z "$services" ]
+then
+    export services="twowaykv,biggraph"
+else
+	export services="$services,twowaykv,biggraph"
+fi
 if [ "$DEPLOY_UI" != "false" ]; then
 	export links_incoming_path=/
 	export links_outgoing_url=file:///static-files
