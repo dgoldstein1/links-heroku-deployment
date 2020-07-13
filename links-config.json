@@ -2,8 +2,8 @@
   "supportedGraphs": [
     {
       "name": "Herman Melville's Moby Dick",
-      "graphEndpoint": "/services/biggraph",
-      "kvEndpoint": "/services/twowaykv",
+      "graphEndpoint": "/links-moby-dick/biggraph",
+      "kvEndpoint": "/links-moby-dick/twowaykv",
       "lookupEndpoint": "/wiki"
     },
     {
