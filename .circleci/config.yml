@@ -1,7 +1,7 @@
 
 defaults: &defaults
   environment:
-    HEROKU_APP_NAMES: "graphapi-twowaykv-dev,links-moby-dick"
+    HEROKU_APP_NAMES: "graphapi-twowaykv-dev,links-moby-dick,links-little-women,links-ulysees"
 
 version: 2
 jobs:
