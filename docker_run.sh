@@ -106,8 +106,8 @@ fi
 if [ "$WRITE_S3" = "true" ]; then
 	sync_s3_loop >logs.txt &
 fi
+start_reverseproxy &
 start_graphapi &
 start_twowaykv &
-start_reverseproxy &
 
 tail -f logs.txt
