@@ -1,6 +1,12 @@
 {
   "supportedGraphs": [
     {
+      "name": "English Synonyms",
+      "graphEndpoint": "/services/biggraph",
+      "kvEndpoint": "/services/twowaykv",
+      "lookupEndpoint": "/wiki"
+    },
+    {
       "name": "Herman Melville's Moby Dick",
       "graphEndpoint": "/links-moby-dick/biggraph",
       "kvEndpoint": "/links-moby-dick/twowaykv",
@@ -12,7 +18,6 @@
       "kvEndpoint": "/little-women/twowaykv",
       "lookupEndpoint": "/wiki"
     },
-    
     {
       "name": "James Joyce's Ulysees",
       "graphEndpoint": "/ulysees/biggraph",
