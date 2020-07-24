@@ -1,9 +1,15 @@
 {
   "supportedGraphs": [
     {
-      "name": "English Synonyms",
+      "name": "Wikipedia Articles",
       "graphEndpoint": "/services/biggraph",
       "kvEndpoint": "/services/twowaykv",
+      "lookupEndpoint": "/wiki"
+    },
+    {
+      "name": "English Synonyms",
+      "graphEndpoint": "/links-en-synonyms/biggraph",
+      "kvEndpoint": "/links-en-synonyms/twowaykv",
       "lookupEndpoint": "/wiki"
     },
     {
