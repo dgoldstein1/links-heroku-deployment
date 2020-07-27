@@ -86,13 +86,15 @@ if [ "$DEPLOY_UI" != "false" ]; then
 	export links_outgoing_url=file:///static-files
 	export lookup_incoming_path=/wiki/
 	export lookup_outgoing_url=https://en.wikipedia.org
+	export arlookup_incoming_path=/ar-wiki/
+	export arlookup_outgoing_url=https://ar.wikipedia.org	
 	# analytics
 	export analytics_incoming_path=/analytics/server/
 	export analytics_outgoing_url=http://analytics-server:5000 #replace this in prod
 	export geoip_incoming_path=/analytics/api/geoIpServer/
   	export geoip_outgoing_url=https://geo.ipify.org/api/
   	# update services
-	export services="$services,links,lookup,geoip,analytics"
+	export services="$services,links,lookup,geoip,analytics,arlookup"
 fi
 # reverse proxy
 # sync s3
