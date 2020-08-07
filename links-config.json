@@ -4,7 +4,7 @@
       "name": "المرادفات العربية",
       "graphEndpoint": "/links-ar-synonyms/biggraph",
       "kvEndpoint": "/links-ar-synonyms/twowaykv",
-      "lookupEndpoint": "/wiki"
+      "lookupEndpoint": "/ar-wiki"
     },
     {
       "name": "Wikipedia Articles",
